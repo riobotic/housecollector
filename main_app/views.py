@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView
 from .models import Cat
 
 def home(request):
@@ -14,3 +15,10 @@ def cats_index(request):
 def cats_detail(request, cat_id):
    cat = Cat.objects.get(id=cat_id)
    return render(request, 'cats/detail.html', {'cat': cat })
+
+class CatCreate(CreateView):
+    model = Cat
+    # fields = ('name', 'breed', 'age', 'description')
+    fields = '__all__'
+    # success_url = '/cats/' this will work, but it's not preferred
+    # Fat Models, Skinny Controllers
